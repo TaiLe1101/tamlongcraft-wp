@@ -1,57 +1,82 @@
+
 <!-- Footer -->
 <footer class="footer">
         <div class="container">
                 <div class="footer__grid">
                         <div class="footer__info">
-                                <a href="index.html" class="footer__logo">Tam<span class="footer__logo-accent">LongCraft</span></a>
-                                <p class="footer__about">TamLongCraft cung cấp các sản phẩm nội thất thủ công cao cấp, kết hợp thiết kế vượt thời gian với chất lượng tuyệt vời.</p>
+                                <a href="<?php echo home_url(); ?>" class="footer__logo">Tam<span class="footer__logo-accent">LongCraft</span></a>
+                                <p class="footer__about"><?php the_field('about'); ?></p>
                                 <div class="footer__social">
-                                        <a href="#" class="footer__social-link"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#" class="footer__social-link"><i class="fab fa-instagram"></i></a>
-                                        <a href="#" class="footer__social-link"><i class="fab fa-pinterest-p"></i></a>
-                                        <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+                                        <a target="_blank" href="<?php the_field('link_facebook') ?>" class="footer__social-link"><i class="fab fa-facebook-f"></i></a>
+                                        <a target="_blank" href="<?php the_field('link_instagram') ?>" class="footer__social-link"><i class="fab fa-instagram"></i></a>
+                                        <a target="_blank" href="<?php the_field('link_zalo') ?>" class="footer__social-link">
+                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+                                                        <g fill="#fcfafa" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                                                <g transform="scale(5.12,5.12)">
+                                                                        <path d="M9,4c-2.74952,0 -5,2.25048 -5,5v32c0,2.74952 2.25048,5 5,5h32c2.74952,0 5,-2.25048 5,-5v-32c0,-2.74952 -2.25048,-5 -5,-5zM9,6h6.58008c-3.57109,3.71569 -5.58008,8.51808 -5.58008,13.5c0,5.16 2.11016,10.09984 5.91016,13.83984c0.12,0.21 0.21977,1.23969 -0.24023,2.42969c-0.29,0.75 -0.87023,1.72961 -1.99023,2.09961c-0.43,0.14 -0.70969,0.56172 -0.67969,1.01172c0.03,0.45 0.36078,0.82992 0.80078,0.91992c2.87,0.57 4.72852,-0.2907 6.22852,-0.9707c1.35,-0.62 2.24133,-1.04047 3.61133,-0.48047c2.8,1.09 5.77938,1.65039 8.85938,1.65039c4.09369,0 8.03146,-0.99927 11.5,-2.88672v3.88672c0,1.66848 -1.33152,3 -3,3h-32c-1.66848,0 -3,-1.33152 -3,-3v-32c0,-1.66848 1.33152,-3 3,-3zM33,15c0.55,0 1,0.45 1,1v9c0,0.55 -0.45,1 -1,1c-0.55,0 -1,-0.45 -1,-1v-9c0,-0.55 0.45,-1 1,-1zM18,16h5c0.36,0 0.70086,0.19953 0.88086,0.51953c0.17,0.31 0.15875,0.69977 -0.03125,1.00977l-4.04883,6.4707h3.19922c0.55,0 1,0.45 1,1c0,0.55 -0.45,1 -1,1h-5c-0.36,0 -0.70086,-0.19953 -0.88086,-0.51953c-0.17,-0.31 -0.15875,-0.69977 0.03125,-1.00977l4.04883,-6.4707h-3.19922c-0.55,0 -1,-0.45 -1,-1c0,-0.55 0.45,-1 1,-1zM27.5,19c0.61,0 1.17945,0.16922 1.68945,0.44922c0.18,-0.26 0.46055,-0.44922 0.81055,-0.44922c0.55,0 1,0.45 1,1v5c0,0.55 -0.45,1 -1,1c-0.35,0 -0.63055,-0.18922 -0.81055,-0.44922c-0.51,0.28 -1.07945,0.44922 -1.68945,0.44922c-1.93,0 -3.5,-1.57 -3.5,-3.5c0,-1.93 1.57,-3.5 3.5,-3.5zM38.5,19c1.93,0 3.5,1.57 3.5,3.5c0,1.93 -1.57,3.5 -3.5,3.5c-1.93,0 -3.5,-1.57 -3.5,-3.5c0,-1.93 1.57,-3.5 3.5,-3.5zM27.5,21c-0.10375,0 -0.20498,0.01131 -0.30273,0.03125c-0.19551,0.03988 -0.37754,0.11691 -0.53711,0.22461c-0.15957,0.1077 -0.2966,0.24473 -0.4043,0.4043c-0.10769,0.15957 -0.18473,0.3416 -0.22461,0.53711c-0.01994,0.09775 -0.03125,0.19898 -0.03125,0.30273c0,0.10375 0.01131,0.20498 0.03125,0.30273c0.01994,0.09775 0.04805,0.19149 0.08594,0.28125c0.03789,0.08977 0.08482,0.17607 0.13867,0.25586c0.05385,0.07979 0.11578,0.15289 0.18359,0.2207c0.06781,0.06781 0.14092,0.12975 0.2207,0.18359c0.15957,0.10769 0.3416,0.18473 0.53711,0.22461c0.09775,0.01994 0.19898,0.03125 0.30273,0.03125c0.10375,0 0.20498,-0.01131 0.30273,-0.03125c0.68428,-0.13959 1.19727,-0.7425 1.19727,-1.46875c0,-0.83 -0.67,-1.5 -1.5,-1.5zM38.5,21c-0.10375,0 -0.20498,0.01131 -0.30273,0.03125c-0.09775,0.01994 -0.19149,0.04805 -0.28125,0.08594c-0.08977,0.03789 -0.17607,0.08482 -0.25586,0.13867c-0.07979,0.05385 -0.15289,0.11578 -0.2207,0.18359c-0.13562,0.13563 -0.24648,0.29703 -0.32227,0.47656c-0.03789,0.08976 -0.066,0.1835 -0.08594,0.28125c-0.01994,0.09775 -0.03125,0.19898 -0.03125,0.30273c0,0.10375 0.01131,0.20498 0.03125,0.30273c0.01994,0.09775 0.04805,0.19149 0.08594,0.28125c0.03789,0.08977 0.08482,0.17607 0.13867,0.25586c0.05385,0.07979 0.11578,0.15289 0.18359,0.2207c0.06781,0.06781 0.14092,0.12975 0.2207,0.18359c0.07979,0.05385 0.16609,0.10078 0.25586,0.13867c0.08976,0.03789 0.1835,0.066 0.28125,0.08594c0.09775,0.01994 0.19898,0.03125 0.30273,0.03125c0.10375,0 0.20498,-0.01131 0.30273,-0.03125c0.68428,-0.13959 1.19727,-0.7425 1.19727,-1.46875c0,-0.83 -0.67,-1.5 -1.5,-1.5z"></path>
+                                                                </g>
+                                                        </g>
+                                                </svg>
+                                        </a>
+                                        <a target="_blank" href="<?php the_field('link_youtube') ?>" class="footer__social-link"><i class="fab fa-youtube"></i></a>
                                 </div>
                         </div>
 
                         <div class="footer__nav">
                                 <h3 class="footer__heading">Liên Kết Nhanh</h3>
-                                <ul class="footer__links">
-                                        <li class="footer__link-item"><a href="index.html" class="footer__link">Trang Chủ</a></li>
-                                        <li class="footer__link-item"><a href="products.html" class="footer__link">Sản Phẩm</a></li>
-                                        <li class="footer__link-item"><a href="articles.html" class="footer__link">Bài Viết</a></li>
-                                        <li class="footer__link-item"><a href="about.html" class="footer__link">Về Chúng Tôi</a></li>
-                                        <li class="footer__link-item"><a href="contact.html" class="footer__link">Liên Hệ</a></li>
-                                </ul>
+                                <?php
+                                wp_nav_menu([
+                                        'theme_location' => 'footer',
+                                        'container' => false,
+                                        'menu_class' => 'footer__links',
+                                        'items_wrap' => '<ul class="footer__links">%3$s</ul>',
+                                        'add_li_class' => 'footer__link-item',
+                                        'add_a_class' => 'footer__link'
+                                ]);
+                                ?>
                         </div>
 
                         <div class="footer__nav">
                                 <h3 class="footer__heading">Danh Mục</h3>
                                 <ul class="footer__links">
-                                        <li class="footer__link-item"><a href="products.html" class="footer__link">Sản phẩm mới</a></li>
-                                        <li class="footer__link-item"><a href="products.html" class="footer__link">Storage</a></li>
-                                        <li class="footer__link-item"><a href="products.html" class="footer__link">Ngoại thất</a></li>
-                                        <li class="footer__link-item"><a href="products.html" class="footer__link">Nội thất</a></li>
+                                        <?php
+                                        $product_categories = get_terms(array(
+                                                'taxonomy' => 'product-category',
+                                                'posts_per_page' => 5,
+                                                'hide_empty' => false, // Hiển thị cả terms không có bài viết nào
+                                        ));
+
+                                        foreach ($product_categories as $category) {
+                                                $category_link = get_term_link($category);
+                                                $category_name = $category->name;
+                                                $category_image = get_field('image', 'product-category_' . $category->term_id); // Lấy ảnh từ custom field
+
+                                        ?>
+                                                <li class="footer__link-item"><a href="<?= esc_url($category_link); ?>" class="footer__link"><?php echo $category_name ?></a></li>
+
+                                        <?php };
+                                        ?>
                                 </ul>
                         </div>
 
                         <div class="footer__nav">
                                 <h3 class="footer__heading">Liên Hệ</h3>
                                 <ul class="footer__links">
-                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-map-marker-alt"></i> 68/36/79 Đường Bưng Ông Thoàn, P. Phú Hữu, TP. Thủ Đức, TP.HCM</a></li>
-                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-phone"></i> 028-36368292</a></li>
-                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-envelope"></i> thaokim@tamlongcraft.com</a></li>
+                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-map-marker-alt"></i> <?php the_field('address'); ?></a></li>
+                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-phone"></i> <?php the_field('phone_number'); ?></a></li>
+                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-envelope"></i> <?php the_field('email'); ?></a></li>
                                 </ul>
                         </div>
                 </div>
 
                 <div class="footer__bottom">
-                        <p>&copy; 2025 TamLongCraft. Bản Quyền Thuộc Về Chúng Tôi. | <a href="#">Chính Sách Bảo Mật</a> | <a href="#">Điều Khoản Dịch Vụ</a></p>
+                        <p>&copy; 2025 TamLongCraft. Bản Quyền Thuộc Về Chúng Tôi. | <a href="/chinh-sach-bao-mat">Chính Sách Bảo Mật</a> | <a href="/dieu-khoan-dich-vu">Điều Khoản Dịch Vụ</a></p>
                 </div>
         </div>
 </footer>
 
-    <!-- Scripts -->
-     <?php wp_footer(); ?>
+<!-- Scripts -->
+<?php wp_footer(); ?>
 </body>
 
 </html>

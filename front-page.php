@@ -1,4 +1,7 @@
-<?php get_header(); ?>
+<?php
+/* Template Name: Home Page */
+get_header();
+?>
 
 <!-- Hero Section -->
 <section class="hero" style="background-image: url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
@@ -15,11 +18,38 @@
 <!-- Featured Products -->
 <section class="section">
     <div class="container">
-        <h2 class="section__title">Các sản phẩm nổi bật</h2>
-        <p class="section__subtitle">khám phá những món đồ nội thất phổ biến nhất của chúng tôi, được thiết kế hướng đến sự sang trọng.</p>
+        <h2 class="section__title"><?php the_field('title_2'); ?></h2>
+        <p class="section__subtitle"><?php the_field('sub_title_2'); ?></p>
 
         <div class="products">
-            <div class="product-card">
+            <?php
+            $products = get_field('highlight_products');
+            foreach ($products as $product) {
+                $product_image = get_the_post_thumbnail_url($product->ID, 'full');
+                $product_title = $product->post_title;
+                $product_content = $product->post_content;
+                $price = get_field('price', $product->ID); // Lấy giá sản phẩm từ custom field (giả sử là 'price')
+                // Lấy taxonomy của sản phẩm (giả sử taxonomy là 'product_cat' hoặc 'danh-muc-san-pham')
+                $product_cats = get_the_terms($product->ID, 'product-category');
+                // Kiểm tra nếu có danh mục và lấy tên danh mục đầu tiên
+                $category_name =  $product_cats[0]->name;
+                // Lấy permalink của sản phẩm
+                $product_link = get_permalink($product->ID);
+            ?>
+                <div class="product-card">
+                    <img src="<?= esc_url($product_image); ?>" alt="<?= esc_attr($product_title); ?>" class="product-card__image">
+                    <div class="product-card__content">
+                        <div class="product-card__category"><?= esc_html($category_name); ?></div>
+                        <h3 class="product-card__title"><?= esc_html($product_title); ?></h3>
+                        <div class="product-card__price"><?= esc_html($price) ?> VNĐ</div>
+                        <p class="product-card__description"><?= esc_html($product_content); ?></p>
+                        <a href="<?= esc_url($product_link); ?>" class="btn btn--dark">Chi tiết</a>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+            <!-- <div class="product-card">
                 <img src="https://tamlongcraft.com/watermark/product/540x540x1/upload/product/snapedit1704025766802-4137.png" alt="Elegance Sofa" class="product-card__image">
                 <div class="product-card__content">
                     <div class="product-card__category">Storage</div>
@@ -50,7 +80,7 @@
                     <p class="product-card__description">Chúng tôi cung cấp bàn console vuông caro với thiết kế hiện đại và chất lượng cao.</p>
                     <a href="product-detail.html" class="btn btn--dark">Chi tiết</a>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="section__action">
@@ -62,42 +92,32 @@
 <!-- Categories Section -->
 <section class="section section--alt">
     <div class="container">
-        <h2 class="section__title">Danh mục để bạn lựa chọn</h2>
-        <p class="section__subtitle">Tìm những món đồ độc quyền cho mọi không gian trong ngôi nhà của bạn.</p>
+        <h2 class="section__title"><?php the_field('title_3'); ?></h2>
+        <p class="section__subtitle"><?php the_field('sub_title_3'); ?></p>
+
 
         <div class="categories">
-            <a href="products.html" class="category">
-                <div class="category__image" style="background-image: url('https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-                    <div class="category__content">
-                        <h3 class="category__title">Sản phẩm mới</h3>
-                    </div>
-                </div>
-            </a>
 
-            <a href="products.html" class="category">
-                <div class="category__image" style="background-image: url('https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-                    <div class="category__content">
-                        <h3 class="category__title">Storage</h3>
-                    </div>
-                </div>
-            </a>
+            <?php
+            $product_categories = get_terms(array(
+                'taxonomy' => 'product-category',
+                'per_page' => 6,
+            ));
 
-            <a href="products.html" class="category">
-                <div class="category__image" style="background-image: url('https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-                    <div class="category__content">
-                        <h3 class="category__title">Ngoại thất</h3>
-                    </div>
-                </div>
-            </a>
+            foreach ($product_categories as $category) {
+                $category_link = get_term_link($category);
+                $category_name = $category->name;
+                $category_image = get_field('image', 'product-category_' . $category->term_id); // Lấy ảnh từ custom field
 
-            <a href="products.html" class="category">
-                <div class="category__image" style="background-image: url('https://images.unsplash.com/photo-1588046130717-0eb0c9a3ba15?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-                    <div class="category__content">
-                        <h3 class="category__title">Nội thất</h3>
+            ?>
+                <a href="<?= $category_link ?>" class="category">
+                    <div class="category__image" style="background-image: url('https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+                        <div class="category__content">
+                            <h3 class="category__title"><?= $category_name ?></h3>
+                        </div>
                     </div>
-                </div>
-            </a>
-
+                </a>
+            <?php }; ?>
 
         </div>
     </div>
@@ -106,81 +126,82 @@
 <!-- Why Choose Us -->
 <section class="section">
     <div class="container">
-        <h2 class="section__title">Tại sao bạn nên chọn TamLongCraft</h2>
-        <p class="section__subtitle">Chúng tôi cam kết mang đến sự xuất sắc trong mọi khía cạnh.</p>
+        <h2 class="section__title"><?php the_field('title_4'); ?></h2>
+        <p class="section__subtitle"><?php the_field('sub_title_4'); ?></p>
 
         <div class="features">
-            <div class="feature">
-                <div class="feature__icon">
-                    <i class="fas fa-medal"></i>
+            <?php
+            $query = new WP_Query(array('post_type' => 'advantage'));
+            while ($query->have_posts()) {
+                $query->the_post();
+                $advantage_id = get_the_ID();
+                $advantage_title = $query->post->post_title;
+                $advantage_description = get_field('desc', $advantage_id);
+                $advantage_icon = get_field('icons', $advantage_id);
+            ?>
+                <div class="feature">
+                    <div class="feature__icon">
+                        <i class="dashicons <?= esc_attr($advantage_icon); ?>"></i>
+                    </div>
+                    <h3 class="feature__title"><?= esc_html($advantage_title); ?></h3>
+                    <p class="feature__description"><?= esc_html($advantage_description); ?></p>
                 </div>
-                <h3 class="feature__title">Chất lượng cao cấp</h3>
-                <p class="feature__description">Tất cả các sản phẩm của chúng tôi được chế tác từ những vật liệu tốt nhất, đảm bảo độ bền và sang trọng.</p>
-            </div>
-
-            <div class="feature">
-                <div class="feature__icon">
-                    <i class="fas fa-pencil-ruler"></i>
-                </div>
-                <h3 class="feature__title">Tay nghề chuyên nghiệp</h3>
-                <p class="feature__description">Nội thất của chúng tôi được chế tác tỉ mỉ bởi những nghệ nhân có nhiều năm kinh nghiệm.</p>
-            </div>
-
-            <div class="feature">
-                <div class="feature__icon">
-                    <i class="fas fa-truck"></i>
-                </div>
-                <h3 class="feature__title">Miễn phí giao hàng</h3>
-                <p class="feature__description">Miễn phí giao hàng</p>
-            </div>
-
-            <div class="feature">
-                <div class="feature__icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="feature__title">Bảo hành 10 năm</h3>
-                <p class="feature__description">Yên tâm với chính sách bảo hành toàn diện của chúng tôi, bao gồm tất cả các lỗi sản xuất.</p>
-            </div>
+            <?php
+            }
+            wp_reset_postdata();
+            ?>
         </div>
+
+
     </div>
 </section>
 
 <!-- Latest Articles -->
 <section class="section section--alt">
     <div class="container">
-        <h2 class="section__title">Gốc cảm hứng</h2>
-        <p class="section__subtitle">Khám phá những xu hướng và mẹo mới nhất từ các chuyên gia thiết kế của chúng tôi.</p>
+        <h2 class="section__title"><?php the_field('title_5'); ?></h2>
+        <p class="section__subtitle"><?php the_field('sub_title_5'); ?></p>
 
         <div class="articles">
-            <div class="article-card">
-            <img src="https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Thiết kế phòng khách mơ ước của bạn" class="article-card__image">
-            <div class="article-card__content">
-                <div class="article-card__date">10 Tháng 4, 2025</div>
-                <h3 class="article-card__title">Thiết kế phòng khách mơ ước của bạn</h3>
-                <p class="article-card__excerpt">Tìm hiểu cách tạo ra một không gian sống sang trọng kết hợp giữa sự thoải mái và phong cách cao cấp.</p>
-                <a href="article-detail.html" class="btn btn--dark">Xem thêm</a>
-            </div>
-            </div>
 
-            <div class="article-card">
-            <img src="https://images.unsplash.com/photo-1589459072535-550f4fae08d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Xu hướng màu sắc năm 2025" class="article-card__image">
-            <div class="article-card__content">
-                <div class="article-card__date">5 Tháng 4, 2025</div>
-                <h3 class="article-card__title">Xu hướng màu sắc năm 2025</h3>
-                <p class="article-card__excerpt">Khám phá các bảng màu đang thống trị thiết kế nội thất cao cấp trong năm nay.</p>
-                <a href="article-detail.html" class="btn btn--dark">Xem thêm</a>
-            </div>
-            </div>
+            <?php
 
-            <div class="article-card">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Nghệ thuật kết hợp chất liệu" class="article-card__image">
-            <div class="article-card__content">
-                <div class="article-card__date">28 Tháng 3, 2025</div>
-                <h3 class="article-card__title">Nghệ thuật kết hợp chất liệu</h3>
-                <p class="article-card__excerpt">Tìm hiểu cách kết hợp các vật liệu và chất liệu khác nhau để tạo nên một không gian nội thất tinh tế.</p>
-                <a href="article-detail.html" class="btn btn--dark">Xem thêm</a>
-            </div>
-            </div>
+            $args = array(
+                'post_type'      => 'post',
+                'posts_per_page' => 3,
+                'category_name'  => 'goc-cam-hung', // thay bằng slug của category bạn muốn
+                'orderby'        => 'date',
+                'order'          => 'DESC'
+            );
+
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    $article_id = get_the_ID();
+                    $article_title = get_the_title($article_id);
+                    $short_desc = get_field('short_desc', $article_id);
+                    $article_image = get_field('thumbnail', $article_id);
+                    $created_at = get_the_date('d/m/Y', $article_id);
+            ?>
+                    <div class="article-card">
+                        <img src="<?= esc_url($article_image); ?>" alt="<?= esc_attr($article_title); ?>" class="article-card__image">
+                        <div class="article-card__content">
+                            <div class="article-card__date"><?= esc_html($created_at); ?></div>
+                            <h3 class="article-card__title"><?php echo $article_title ?></h3>
+                            <p class="article-card__excerpt"><?php echo esc_html($short_desc); ?></p>
+                            <a href="<?php echo get_permalink($article_id); ?>" class="btn btn--dark">Xem thêm</a>
+                        </div>
+                    </div>
+            <?php
+                }
+                wp_reset_postdata();
+            } else {
+                echo 'Không có bài viết nào.';
+            }
+
+            ?>
         </div>
 
         <div class="section__action">
@@ -192,67 +213,59 @@
 <!-- Testimonials -->
 <section class="section">
     <div class="container">
-        <h2 class="section__title">Khách hàng nói gì về chúng tôi</h2>
-        <p class="section__subtitle">Lắng nghe từ những khách hàng đã biến đổi ngôi nhà của họ với TamLongCraft.</p>
+        <h2 class="section__title"><?php the_field('title_6'); ?></h2>
+        <p class="section__subtitle"><?php the_field('sub_title_6'); ?></p>
 
         <div class="testimonials">
-            <div class="testimonial">
-                <div class="testimonial__quote">
-                    <i class="fas fa-quote-left"></i>
-                </div>
-                <p class="testimonial__text">Chất lượng và sự tinh xảo của từng sản phẩm tôi mua từ TamLongCraft đã vượt xa mong đợi của tôi. Sự chú ý đến từng chi tiết của họ thật đáng kinh ngạc.</p>
-                <div class="testimonial__author">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Sarah Johnson" class="testimonial__author-image">
-                    <div class="testimonial__author-info">
-                        <h4 class="testimonial__author-name">Lê Trần Tấn Tài</h4>
-                        <p class="testimonial__author-title">Nhà thiết kế nội thất</p>
-                    </div>
-                </div>
-            </div>
+            <?php
 
-            <div class="testimonial">
-                <div class="testimonial__quote">
-                    <i class="fas fa-quote-left"></i>
-                </div>
-                <p class="testimonial__text">Không chỉ nội thất của họ đẹp, mà dịch vụ khách hàng cũng rất tuyệt vời. Đội ngũ giao hàng rất chuyên nghiệp và đảm bảo mọi thứ hoàn hảo.</p>
-                <div class="testimonial__author">
-                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Lê Trần Tấn Tài" class="testimonial__author-image">
-                    <div class="testimonial__author-info">
-                        <h4 class="testimonial__author-name">Lê Trần Tấn Tài</h4>
-                        <p class="testimonial__author-title">Chủ nhà</p>
-                    </div>
-                </div>
-            </div>
+            $args = array(
+                'post_type'      => 'customer-comments',
+                'posts_per_page' => 3,
+                'orderby'        => 'date',
+                'order'          => 'DESC'
+            );
 
-            <div class="testimonial">
-                <div class="testimonial__quote">
-                    <i class="fas fa-quote-left"></i>
-                </div>
-                <p class="testimonial__text">Tôi đã trang trí toàn bộ ngôi nhà của mình bằng các sản phẩm từ TamLongCraft. Thiết kế vượt thời gian và chất lượng vượt trội khiến chúng đáng giá từng đồng.</p>
-                <div class="testimonial__author">
-                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Lê Trần Tấn Tài" class="testimonial__author-image">
-                    <div class="testimonial__author-info">
-                        <h4 class="testimonial__author-name">Lê Trần Tấn Tài</h4>
-                        <p class="testimonial__author-title">Nhà phát triển bất động sản</p>
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    $customer_id = get_the_ID();
+                    $name = get_field('name', $customer_id);
+                    $job = get_field('work', $customer_id);
+                    $avatar = get_field('avatar', $customer_id);
+                    $content = get_field('content', $customer_id);
+            ?>
+                    <div class="testimonial">
+                        <div class="testimonial__quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial__text"><?= esc_html($content); ?></p>
+                        <div class="testimonial__author">
+                            <img src="<?= esc_url($avatar); ?>" alt="<?= esc_attr($name); ?>" class="testimonial__author-image">
+                            <div class="testimonial__author-info">
+                                <h4 class="testimonial__author-name"><?= esc_html($name); ?></h4>
+                                <p class="testimonial__author-title"><?= esc_html($job); ?></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+            <?php
+                }
+                wp_reset_postdata();
+            } else {
+                echo 'Không có bài viết nào.';
+            }
+
+            ?>
+
+
         </div>
     </div>
 </section>
-<!-- Bản tin -->
-<section class="section section--newsletter" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-    <div class="container">
-        <div class="newsletter">
-            <h2 class="newsletter__title">Tham gia danh sách gửi thư của chúng tôi</h2>
-            <p class="newsletter__subtitle">Đăng ký để nhận các ưu đãi độc quyền, mẹo thiết kế và thông báo sản phẩm mới.</p>
-            <form class="newsletter__form">
-                <input type="email" placeholder="Địa chỉ email của bạn" class="newsletter__input" required>
-                <button type="submit" class="btn btn--primary newsletter__btn">Đăng ký</button>
-            </form>
-        </div>
-    </div>
-</section>
+
+<?php get_template_part('section', 'newsletter'); ?>
+
 
 <!-- Footer -->
 <?php get_footer(); ?>

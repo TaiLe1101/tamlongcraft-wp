@@ -12,18 +12,17 @@
     <!-- Header -->
     <header class="header">
         <div class="container header__container">
-            <a href="index.html" class="header__logo">Tam<span class="header__logo-accent">LongCraft</span></a>
-            <nav class="nav">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="/" class="nav__link nav__link--active">Trang chủ</a></li>
-                    <li class="nav__item"><a href="/trang-danh-sach-san-pham" class="nav__link">Sản phẩm</a></li>
-                    <li class="nav__item"><a href="articles.html" class="nav__link">Bài viết</a></li>
-                    <li class="nav__item"><a href="about.html" class="nav__link">Về chúng tôi</a></li>
-                    <li class="nav__item"><a href="contact.html" class="nav__link">Liên hệ</a></li>
-                </ul>
-                <div class="nav__toggle">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
+            <a href="/" class="header__logo">Tam<span class="header__logo-accent">LongCraft</span></a>
+            <?php
+            wp_nav_menu([
+                'theme_location' => 'primary',
+                'menu_class' => 'nav__list',
+                'container' => 'nav',
+                'container_class' => 'nav', // Class cho thẻ container (nav)
+                'items_wrap' => '<ul class="nav__list">%3$s</ul>',
+                'add_li_class' => 'nav__item' // Custom parameter (sẽ cần thêm filter)
+            ]);
+            ?>
         </div>
+
     </header>
