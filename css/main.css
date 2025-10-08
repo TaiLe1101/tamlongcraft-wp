@@ -131,7 +131,7 @@ a:hover {
 }
 
 /* Navigation */
-.nav__list {
+.nav__list ul {
   display: flex;
   list-style: none;
 }
