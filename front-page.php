@@ -41,7 +41,6 @@ get_header();
                     <div class="product-card__content">
                         <div class="product-card__category"><?= esc_html($category_name); ?></div>
                         <h3 class="product-card__title"><?= esc_html($product_title); ?></h3>
-                        <div class="product-card__price"><?= esc_html($price) ?> VNĐ</div>
                         <p class="product-card__description"><?= esc_html($product_content); ?></p>
                         <a href="<?= esc_url($product_link); ?>" class="btn btn--dark">Chi tiết</a>
                     </div>
@@ -49,38 +48,7 @@ get_header();
             <?php
             }
             ?>
-            <!-- <div class="product-card">
-                <img src="https://tamlongcraft.com/watermark/product/540x540x1/upload/product/snapedit1704025766802-4137.png" alt="Elegance Sofa" class="product-card__image">
-                <div class="product-card__content">
-                    <div class="product-card__category">Storage</div>
-                    <h3 class="product-card__title">Chậu hoa decor trang trí</h3>
-                    <div class="product-card__price">100,000 VNĐ</div>
-                    <p class="product-card__description">Chậu cây là vật dụng không thể thiếu trong trang trí nhà cửa. Chậu cây Tam Long không chỉ giúp tô điểm cho không gian sống thêm sinh động, tươi mát mà còn mang lại nhiều lợi ích cho sức khỏe và tinh thần. Có rất nhiều loại chậu cây với nhiều kiểu dáng, chất liệu khác nhau. Tùy theo sở thích và nhu cầu của mình, bạn có thể lựa chọn loại chậu cây phù hợp.</p>
-                    <a href="product-detail.html" class="btn btn--dark">Chi tiết</a>
-                </div>
-            </div>
 
-            <div class="product-card">
-                <img src="https://tamlongcraft.com/watermark/product/540x540x1/upload/product/pn08-9581.png" alt="Monarch Dining Table" class="product-card__image">
-                <div class="product-card__content">
-                    <div class="product-card__category">Ngoại thất</div>
-                    <h3 class="product-card__title">Ghế trứng treo PN08</h3>
-                    <div class="product-card__price">100,000 VNĐ</div>
-                    <p class="product-card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur quae quaerat dicta sequi cumque fugit accusantium, consectetur excepturi asperiores rem velit ipsam eligendi a voluptates eos quos, reiciendis dolorum error.</p>
-                    <a href="product-detail.html" class="btn btn--dark">Chi tiết</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <img src="https://tamlongcraft.com/watermark/product/540x540x1/upload/product/bench-7379.jpg" alt="Serenity Bed Frame" class="product-card__image">
-                <div class="product-card__content">
-                    <div class="product-card__category">Nội thất</div>
-                    <h3 class="product-card__title">Bàn console vuông caro</h3>
-                    <div class="product-card__price">100,000 VNĐ</div>
-                    <p class="product-card__description">Chúng tôi cung cấp bàn console vuông caro với thiết kế hiện đại và chất lượng cao.</p>
-                    <a href="product-detail.html" class="btn btn--dark">Chi tiết</a>
-                </div>
-            </div> -->
         </div>
 
         <div class="section__action">
