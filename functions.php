@@ -9,7 +9,7 @@ function load_assets()
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), null);
 
     // Đăng ký và tải file CSS chính
-    wp_enqueue_style('main-css', get_theme_file_uri() . '/css/main.css', array(), '1.0.3', 'all');
+    wp_enqueue_style('main-css', get_theme_file_uri() . '/css/main.css', array(), '1.0.4', 'all');
 
     // Đăng ký và tải jQuery (nếu cần thiết)
     wp_enqueue_script('jquery');
