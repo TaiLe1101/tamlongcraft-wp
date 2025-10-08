@@ -134,6 +134,7 @@ a:hover {
 .nav__list ul {
   display: flex;
   list-style: none;
+  gap: 40px;
 }
 
 .nav__item {

@@ -73,15 +73,7 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
             <div class="product-detail__info">
                 <div class="product-detail__category">Sofa</div>
                 <h1 class="product-detail__title"><?php echo $title; ?></h1>
-                <div class="product-detail__price"><?php echo $price; ?> VNĐ</div>
-                <!-- <div class="product-detail__rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span>(24 đánh giá)</span>
-                </div> -->
+
                 <div class="product-detail__description">
                     <?php echo $short_description; ?>
                 </div>
@@ -94,7 +86,7 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                         </div>
                     <?php endif; ?>
 
-                   
+
 
                     <?php if (!empty($material)) : ?>
                         <div class="product-detail__meta-item">
@@ -224,13 +216,13 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                         // Obtener la categoría del producto actual
                         $product_cats = get_the_terms(get_the_ID(), 'product-category');
                         $category_ids = array();
-                        
+
                         if ($product_cats && !is_wp_error($product_cats)) {
                             foreach ($product_cats as $cat) {
                                 $category_ids[] = $cat->term_id;
                             }
                         }
-                        
+
                         // Consultar productos relacionados (misma categoría, excepto el producto actual)
                         $args = array(
                             'post_type' => 'san-pham',
@@ -245,9 +237,9 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                                 )
                             )
                         );
-                        
+
                         $related_products = new WP_Query($args);
-                        
+
                         // Mostrar los productos relacionados
                         if ($related_products->have_posts()) :
                             while ($related_products->have_posts()) : $related_products->the_post();
@@ -261,19 +253,18 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                                 $rel_product_cats = get_the_terms($rel_product_id, 'product-category');
                                 $rel_category_name = isset($rel_product_cats[0]) ? $rel_product_cats[0]->name : '';
                         ?>
-                        <div class="product-card">
-                            <img src="<?php echo $rel_product_image; ?>" alt="<?php echo $rel_product_title; ?>" class="product-card__image">
-                            <div class="product-card__content">
-                                <div class="product-card__category"><?php echo $rel_category_name; ?></div>
-                                <h3 class="product-card__title"><?php echo $rel_product_title; ?></h3>
-                                <div class="product-card__price"><?php echo $rel_price; ?> VNĐ</div>
-                                <p class="product-card__description"><?php echo $rel_short_desc; ?></p>
-                                <a href="<?php echo get_permalink($rel_product_id); ?>" class="btn btn--dark">Xem chi tiết</a>
-                            </div>
-                        </div>
+                                <div class="product-card">
+                                    <img src="<?php echo $rel_product_image; ?>" alt="<?php echo $rel_product_title; ?>" class="product-card__image">
+                                    <div class="product-card__content">
+                                        <div class="product-card__category"><?php echo $rel_category_name; ?></div>
+                                        <h3 class="product-card__title"><?php echo $rel_product_title; ?></h3>
+                                        <p class="product-card__description"><?php echo $rel_short_desc; ?></p>
+                                        <a href="<?php echo get_permalink($rel_product_id); ?>" class="btn btn--dark">Xem chi tiết</a>
+                                    </div>
+                                </div>
                         <?php
                             endwhile;
-                            
+
                         else:
                             echo '<p>Không có sản phẩm liên quan.</p>';
                         endif;
@@ -282,7 +273,7 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                     </div>
                 </div>
             </div>
-            
+
             <!-- Sidebar -->
             <aside class="sidebar">
                 <!-- Categories -->
@@ -329,9 +320,9 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                             'orderby' => 'date',
                             'order' => 'DESC'
                         );
-                        
+
                         $featured_products = new WP_Query($featured_args);
-                        
+
                         if ($featured_products->have_posts()) :
                             while ($featured_products->have_posts()) : $featured_products->the_post();
                                 $feat_product_id = get_the_ID();
@@ -340,13 +331,12 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
                                 $feat_price = get_field('price', $feat_product_id);
                                 $feat_price = number_format($feat_price, 0, ',', '.');
                         ?>
-                        <div class="sidebar-product">
-                            <img src="<?php echo $feat_product_image; ?>" alt="<?php echo $feat_product_title; ?>" class="sidebar-product__image">
-                            <div class="sidebar-product__content">
-                                <h4 class="sidebar-product__title"><a href="<?php echo get_permalink($feat_product_id); ?>"><?php echo $feat_product_title; ?></a></h4>
-                                <div class="sidebar-product__price"><?php echo $feat_price; ?> VNĐ</div>
-                            </div>
-                        </div>
+                                <div class="sidebar-product">
+                                    <img src="<?php echo $feat_product_image; ?>" alt="<?php echo $feat_product_title; ?>" class="sidebar-product__image">
+                                    <div class="sidebar-product__content">
+                                        <h4 class="sidebar-product__title"><a href="<?php echo get_permalink($feat_product_id); ?>"><?php echo $feat_product_title; ?></a></h4>
+                                    </div>
+                                </div>
                         <?php
                             endwhile;
                         else:
