@@ -9,8 +9,8 @@ get_header();
         <div class="hero__content">
             <h1 class="hero__title"><?php the_field('title_heading'); ?></h1>
             <p class="hero__subtitle"><?php the_field('desc_title'); ?></p>
-            <a href="products.html" class="btn btn--primary"><?php the_field('home_btn_heading_left'); ?></a>
-            <a href="about.html" class="btn btn--secondary"><?php the_field('home_btn_heading_right'); ?></a>
+            <a href="/san-pham" class="btn btn--primary"><?php the_field('home_btn_heading_left'); ?></a>
+            <a href="/ve-chung-toi" class="btn btn--secondary"><?php the_field('home_btn_heading_right'); ?></a>
         </div>
     </div>
 </section>
@@ -52,7 +52,7 @@ get_header();
         </div>
 
         <div class="section__action">
-            <a href="products.html" class="btn btn--primary">Xem tất cả sản phẩm</a>
+            <a href="/san-pham" class="btn btn--primary">Xem tất cả sản phẩm</a>
         </div>
     </div>
 </section>
@@ -173,7 +173,7 @@ get_header();
         </div>
 
         <div class="section__action">
-            <a href="articles.html" class="btn btn--primary">Xem tất cả bài viết</a>
+            <a href="/bai-viet" class="btn btn--primary">Xem tất cả bài viết</a>
         </div>
     </div>
 </section>

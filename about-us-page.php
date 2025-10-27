@@ -57,7 +57,7 @@ $customers = get_field('customers', $current_page_id);
     <div class="container">
         <h1 class="page-header__title">Câu chuyện của chúng tôi</h1>
         <div class="breadcrumbs">
-            <a href="index.html" class="breadcrumbs__link">Trang chủ</a>
+            <a href="/" class="breadcrumbs__link">Trang chủ</a>
             <span class="breadcrumbs__separator">/</span>
             <span class="breadcrumbs__current">Về chúng tôi</span>
         </div>
