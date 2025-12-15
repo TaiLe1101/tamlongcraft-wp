@@ -15,6 +15,7 @@ get_header();
     </div>
 </section>
 
+<!-- Sửa thành các sản phẩm -->
 <!-- Featured Products -->
 <section class="section">
     <div class="container">
@@ -23,29 +24,44 @@ get_header();
 
         <div class="products">
             <?php
-            $products = get_field('highlight_products');
-            foreach ($products as $product) {
-                $product_image = get_the_post_thumbnail_url($product->ID, 'full');
-                $product_title = $product->post_title;
-                $product_content = $product->post_content;
-                $price = get_field('price', $product->ID); // Lấy giá sản phẩm từ custom field (giả sử là 'price')
-                // Lấy taxonomy của sản phẩm (giả sử taxonomy là 'product_cat' hoặc 'danh-muc-san-pham')
-                $product_cats = get_the_terms($product->ID, 'product-category');
-                // Kiểm tra nếu có danh mục và lấy tên danh mục đầu tiên
-                $category_name =  $product_cats[0]->name;
-                // Lấy permalink của sản phẩm
-                $product_link = get_permalink($product->ID);
+            $args = array(
+                'post_type' => 'san-pham',
+                'posts_per_page' => 6,
+                'orderby' => 'date',
+                'order' => 'DESC'
+            );
+
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    $product_id = get_the_ID();
+                    $product_image = get_the_post_thumbnail_url($product_id, 'full');
+                    $product_title = get_the_title();
+                    $product_content = get_the_content();
+                    $price = get_field('price', $product_id);
+                    // Lấy taxonomy của sản phẩm
+                    $product_cats = get_the_terms($product_id, 'product-category');
+                    // Kiểm tra nếu có danh mục và lấy tên danh mục đầu tiên
+                    $category_name = !empty($product_cats) ? $product_cats[0]->name : '';
+                    // Lấy permalink của sản phẩm
+                    $product_link = get_permalink($product_id);
             ?>
-                <div class="product-card">
-                    <img src="<?= esc_url($product_image); ?>" alt="<?= esc_attr($product_title); ?>" class="product-card__image">
-                    <div class="product-card__content">
-                        <div class="product-card__category"><?= esc_html($category_name); ?></div>
-                        <h3 class="product-card__title"><?= esc_html($product_title); ?></h3>
-                        <p class="product-card__description"><?= esc_html($product_content); ?></p>
-                        <a href="<?= esc_url($product_link); ?>" class="btn btn--dark">Chi tiết</a>
+                    <div class="product-card">
+                        <img src="<?= esc_url($product_image); ?>" alt="<?= esc_attr($product_title); ?>" class="product-card__image">
+                        <div class="product-card__content">
+                            <?php if (!empty($category_name)) : ?>
+                                <div class="product-card__category"><?= esc_html($category_name); ?></div>
+                            <?php endif; ?>
+                            <h3 class="product-card__title"><?= esc_html($product_title); ?></h3>
+                            <p class="product-card__description"><?= esc_html($product_content); ?></p>
+                            <a href="<?= esc_url($product_link); ?>" class="btn btn--dark">Chi tiết</a>
+                        </div>
                     </div>
-                </div>
             <?php
+                }
+                wp_reset_postdata();
             }
             ?>
 
@@ -125,26 +141,26 @@ get_header();
 </section>
 
 <!-- Latest Articles -->
-<section class="section section--alt">
-    <div class="container">
-        <h2 class="section__title"><?php the_field('title_5'); ?></h2>
-        <p class="section__subtitle"><?php the_field('sub_title_5'); ?></p>
+<?php
+$args = array(
+    'post_type'      => 'post',
+    'posts_per_page' => 3,
+    'category_name'  => 'goc-cam-hung', // thay bằng slug của category bạn muốn
+    'orderby'        => 'date',
+    'order'          => 'DESC'
+);
 
-        <div class="articles">
+$query = new WP_Query($args);
 
-            <?php
+if ($query->have_posts()) :
+?>
+    <section class="section section--alt">
+        <div class="container">
+            <h2 class="section__title"><?php the_field('title_5'); ?></h2>
+            <p class="section__subtitle"><?php the_field('sub_title_5'); ?></p>
 
-            $args = array(
-                'post_type'      => 'post',
-                'posts_per_page' => 3,
-                'category_name'  => 'goc-cam-hung', // thay bằng slug của category bạn muốn
-                'orderby'        => 'date',
-                'order'          => 'DESC'
-            );
-
-            $query = new WP_Query($args);
-
-            if ($query->have_posts()) {
+            <div class="articles">
+                <?php
                 while ($query->have_posts()) {
                     $query->the_post();
                     $article_id = get_the_ID();
@@ -152,7 +168,7 @@ get_header();
                     $short_desc = get_field('short_desc', $article_id);
                     $article_image = get_field('thumbnail', $article_id);
                     $created_at = get_the_date('d/m/Y', $article_id);
-            ?>
+                ?>
                     <div class="article-card">
                         <img src="<?= esc_url($article_image); ?>" alt="<?= esc_attr($article_title); ?>" class="article-card__image">
                         <div class="article-card__content">
@@ -162,41 +178,41 @@ get_header();
                             <a href="<?php echo get_permalink($article_id); ?>" class="btn btn--dark">Xem thêm</a>
                         </div>
                     </div>
-            <?php
+                <?php
                 }
                 wp_reset_postdata();
-            } else {
-                echo 'Không có bài viết nào.';
-            }
+                ?>
+            </div>
 
-            ?>
+            <div class="section__action">
+                <a href="/bai-viet" class="btn btn--primary">Xem tất cả bài viết</a>
+            </div>
         </div>
-
-        <div class="section__action">
-            <a href="/bai-viet" class="btn btn--primary">Xem tất cả bài viết</a>
-        </div>
-    </div>
-</section>
+    </section>
+<?php
+endif;
+?>
 
 <!-- Testimonials -->
-<section class="section">
-    <div class="container">
-        <h2 class="section__title"><?php the_field('title_6'); ?></h2>
-        <p class="section__subtitle"><?php the_field('sub_title_6'); ?></p>
+<?php
+$args = array(
+    'post_type'      => 'customer-comments',
+    'posts_per_page' => 3,
+    'orderby'        => 'date',
+    'order'          => 'DESC'
+);
 
-        <div class="testimonials">
-            <?php
+$query = new WP_Query($args);
 
-            $args = array(
-                'post_type'      => 'customer-comments',
-                'posts_per_page' => 3,
-                'orderby'        => 'date',
-                'order'          => 'DESC'
-            );
+if ($query->have_posts()) :
+?>
+    <section class="section">
+        <div class="container">
+            <h2 class="section__title"><?php the_field('title_6'); ?></h2>
+            <p class="section__subtitle"><?php the_field('sub_title_6'); ?></p>
 
-            $query = new WP_Query($args);
-
-            if ($query->have_posts()) {
+            <div class="testimonials">
+                <?php
                 while ($query->have_posts()) {
                     $query->the_post();
                     $customer_id = get_the_ID();
@@ -204,7 +220,7 @@ get_header();
                     $job = get_field('work', $customer_id);
                     $avatar = get_field('avatar', $customer_id);
                     $content = get_field('content', $customer_id);
-            ?>
+                ?>
                     <div class="testimonial">
                         <div class="testimonial__quote">
                             <i class="fas fa-quote-left"></i>
@@ -218,19 +234,16 @@ get_header();
                             </div>
                         </div>
                     </div>
-            <?php
+                <?php
                 }
                 wp_reset_postdata();
-            } else {
-                echo 'Không có bài viết nào.';
-            }
-
-            ?>
-
-
+                ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+<?php
+endif;
+?>
 
 <?php get_template_part('section', 'newsletter'); ?>
 

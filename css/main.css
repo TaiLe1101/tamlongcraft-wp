@@ -2648,7 +2648,7 @@ a:hover {
 
 .footer__link,
 .footer__list a {
-  color: var(--color-light-gray);
+  color: var(--color-white);
   transition: var(--transition);
   display: block;
 }

@@ -24,6 +24,15 @@
 
                         <div class="footer__nav">
                                 <h3 class="footer__heading">Liên Kết Nhanh</h3>
+                                <style>
+                                        .footer__nav .footer__links .footer__link {
+                                                color: #FFD700 !important;
+                                                font-weight: bold !important;
+                                        }
+                                        .footer__nav .footer__links .footer__link:hover {
+                                                color: #ffffff !important;
+                                        }
+                                </style>
                                 <?php
                                 wp_nav_menu([
                                         'theme_location' => 'footer',
@@ -52,7 +61,7 @@
                                                 $category_image = get_field('image', 'product-category_' . $category->term_id); // Lấy ảnh từ custom field
 
                                         ?>
-                                                <li class="footer__link-item"><a href="<?= esc_url($category_link); ?>" class="footer__link"><?php echo $category_name ?></a></li>
+                                                <li class="footer__link-item"><a href="<?= esc_url($category_link); ?>" class="footer__link" style="color: #ffffff !important;"><?php echo $category_name ?></a></li>
 
                                         <?php };
                                         ?>
@@ -62,9 +71,9 @@
                         <div class="footer__nav">
                                 <h3 class="footer__heading">Liên Hệ</h3>
                                 <ul class="footer__links">
-                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-map-marker-alt"></i> <?php the_field('address'); ?></a></li>
-                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-phone"></i> <?php the_field('phone_number'); ?></a></li>
-                                        <li class="footer__link-item"><a href="#" class="footer__link"><i class="fas fa-envelope"></i> <?php the_field('email'); ?></a></li>
+                                        <li class="footer__link-item"><a href="#" class="footer__link" style="color: #ffffff !important;"><i class="fas fa-map-marker-alt"></i> <?php the_field('address'); ?></a></li>
+                                        <li class="footer__link-item"><a href="#" class="footer__link" style="color: #ffffff !important;"><i class="fas fa-phone"></i> <?php the_field('phone_number'); ?></a></li>
+                                        <li class="footer__link-item"><a href="#" class="footer__link" style="color: #ffffff !important;"><i class="fas fa-envelope"></i> <?php the_field('email'); ?></a></li>
                                 </ul>
                         </div>
                 </div>
