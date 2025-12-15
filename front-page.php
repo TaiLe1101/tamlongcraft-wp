@@ -106,13 +106,14 @@ if (!empty($product_categories) && !is_wp_error($product_categories)) :
         .category-slide__image {
             width: 100%;
             height: 100%;
-            background-size: cover;
+            background-size: contain;
             background-position: center;
+            background-repeat: no-repeat;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .category-slide:hover .category-slide__image {
-            transform: scale(1.15);
+            transform: scale(1.05);
         }
 
         .category-slide__overlay {
