@@ -8,6 +8,9 @@ function load_assets()
     // Đăng ký và tải Font Awesome
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), null);
 
+    // Đăng ký và tải Swiper CSS
+    wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), null);
+
     // Đăng ký và tải file CSS chính
     wp_enqueue_style('main-css', get_theme_file_uri() . '/css/main.css', array(), time(), 'all');
 
@@ -17,8 +20,11 @@ function load_assets()
     // Đăng ký và tải file CSS cho Dashicons (nếu cần thiết)
     wp_enqueue_style('dashicons');
 
+    // Đăng ký và tải Swiper JS
+    wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), null, true);
+
     // Đăng ký và tải file JavaScript chính
-    wp_enqueue_script('main-js', get_theme_file_uri() . '/js/main.js', array('jquery'), time(), true);
+    wp_enqueue_script('main-js', get_theme_file_uri() . '/js/main.js', array('jquery', 'swiper-js'), time(), true);
 
     // Thêm inline script để đảm bảo $ hoạt động
     wp_add_inline_script('main-js', 'var $ = jQuery;', 'before');
