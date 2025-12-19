@@ -4,7 +4,7 @@ get_header();
 ?>
 
 <!-- Hero Section -->
-<section class="hero" style="background-image: url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+<section class="hero" style="background-image: url('<?php the_field('hero'); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div class="container">
         <div class="hero__content">
             <h1 class="hero__title"><?php the_field('title_heading'); ?></h1>
