@@ -10,7 +10,7 @@ get_header();
             <h1 class="hero__title"><?php the_field('title_heading'); ?></h1>
             <p class="hero__subtitle"><?php the_field('desc_title'); ?></p>
             <a href="/san-pham" class="btn btn--primary"><?php the_field('home_btn_heading_left'); ?></a>
-            <a href="/ve-chung-toi" class="btn btn--secondary"><?php the_field('home_btn_heading_right'); ?></a>
+            <a href="#" class="btn btn--secondary"><?php the_field('home_btn_heading_right'); ?></a>
         </div>
     </div>
 </section>
