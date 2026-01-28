@@ -308,7 +308,7 @@ $tutorial = isset($specifications['tutorial']) ? $specifications['tutorial'] : '
 
                 <!-- Featured Products -->
                 <div class="sidebar__widget">
-                    <h3 class="sidebar__widget-title">Best Seller</h3>
+                    <h3 class="sidebar__widget-title">New It Best Seller</h3>
                     <div class="sidebar-products">
                         <?php
                         // Truy vấn các sản phẩm nổi bật

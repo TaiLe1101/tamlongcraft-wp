@@ -1,10 +1,11 @@
-
 <!-- Footer -->
 <footer class="footer">
         <div class="container">
                 <div class="footer__grid">
                         <div class="footer__info">
-                                <a href="<?php echo home_url(); ?>" class="footer__logo">Tam<span class="footer__logo-accent">LongCraft</span></a>
+                                <a href="<?php echo home_url(); ?>" class="footer__logo" style="line-height: 28px;">Tam Long Craft<p class="footer__logo-accent" style="line-height: 28px;">
+                                                Manifactory - In Export
+                                        </p></a>
                                 <p class="footer__about"><?php the_field('about'); ?></p>
                                 <div class="footer__social">
                                         <a target="_blank" href="<?php the_field('link_facebook') ?>" class="footer__social-link"><i class="fab fa-facebook-f"></i></a>
@@ -29,6 +30,7 @@
                                                 color: #FFD700 !important;
                                                 font-weight: bold !important;
                                         }
+
                                         .footer__nav .footer__links .footer__link:hover {
                                                 color: #ffffff !important;
                                         }
@@ -79,7 +81,7 @@
                 </div>
 
                 <div class="footer__bottom">
-                        <p>&copy; 2025 TamLongCraft. Bản Quyền Thuộc Về Chúng Tôi. | <a href="/chinh-sach-bao-mat">Chính Sách Bảo Mật</a> | <a href="/dieu-khoan-dich-vu">Điều Khoản Dịch Vụ</a></p>
+                        <p>&copy; 2025 Tam Long Craft Manifactory - In Export. Bản Quyền Thuộc Về Chúng Tôi. | <a href="/chinh-sach-bao-mat">Chính Sách Bảo Mật</a> | <a href="/dieu-khoan-dich-vu">Điều Khoản Dịch Vụ</a></p>
                 </div>
         </div>
 </footer>

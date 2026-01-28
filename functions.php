@@ -285,12 +285,20 @@ function handle_contact_form_submission()
     $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
     $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
     $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+    $contact_target = isset($_POST['contact_target']) ? sanitize_text_field($_POST['contact_target']) : '';
     $newsletter = isset($_POST['newsletter']) && $_POST['newsletter'] === '1' ? true : false;
     $privacy = isset($_POST['privacy']) && $_POST['privacy'] === '1' ? true : false;
 
     // Kiểm tra dữ liệu bắt buộc
-    if (empty($first_name) || empty($last_name) || empty($email) || empty($message) || !$privacy) {
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($message) || empty($contact_target) || !$privacy) {
         wp_send_json_error(['message' => 'Vui lòng điền đầy đủ thông tin bắt buộc.']);
+        die();
+    }
+
+    // Xác thực lựa chọn liên hệ hợp lệ
+    $allowed_targets = ['factory', 'showroom'];
+    if (!in_array($contact_target, $allowed_targets, true)) {
+        wp_send_json_error(['message' => 'Vui lòng chọn nơi cần liên hệ hợp lệ.']);
         die();
     }
 
@@ -314,13 +322,14 @@ function handle_contact_form_submission()
             'last_name' => $last_name,
             'email' => $email,
             'phone' => $phone,
+            'contact_target' => $contact_target,
             'message' => $message,
             'newsletter' => $newsletter ? 1 : 0,
             'date_submitted' => current_time('mysql'),
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT']
         ],
-        ['%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s']
+        ['%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s']
     );
 
     if (!$result) {
@@ -363,14 +372,17 @@ function create_contact_form_table()
     $table_name = $wpdb->prefix . 'contact_submissions';
     $charset_collate = $wpdb->get_charset_collate();
 
-    // Chỉ tạo bảng nếu nó chưa tồn tại
-    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+    $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
+
+    // Tạo bảng nếu chưa có
+    if (!$table_exists) {
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             first_name varchar(50) NOT NULL,
             last_name varchar(50) NOT NULL,
             email varchar(100) NOT NULL,
             phone varchar(20) NOT NULL,
+            contact_target varchar(50) NOT NULL,
             message text NOT NULL,
             newsletter tinyint(1) DEFAULT 0,
             date_submitted datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
@@ -382,6 +394,16 @@ function create_contact_form_table()
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+    } else {
+        // Bổ sung cột contact_target nếu bảng đã tồn tại
+        $column_exists = $wpdb->get_var($wpdb->prepare(
+            "SHOW COLUMNS FROM $table_name LIKE %s",
+            'contact_target'
+        ));
+
+        if (!$column_exists) {
+            $wpdb->query("ALTER TABLE $table_name ADD contact_target varchar(50) NOT NULL DEFAULT '' AFTER phone");
+        }
     }
 }
 
@@ -570,6 +592,7 @@ function display_contact_submissions_page()
                     <th style="width: 15%;" class="fixed-th">Tên</th>
                     <th style="width: 15%;" class="fixed-th">Email</th>
                     <th style="width: 10%;" class="fixed-th">Số điện thoại</th>
+                    <th style="width: 12%;" class="fixed-th">Nơi nhận</th>
                     <th style="width: 20%;" class="fixed-th">Nội dung</th>
                     <th style="width: 15%;" class="fixed-th">Ngày gửi</th>
                     <th style="width: 10%;" class="fixed-th">Trạng thái</th>
@@ -587,6 +610,12 @@ function display_contact_submissions_page()
 
                         // Tạo các nút hành động
                         $actions = [];
+                        $target_label = '';
+                        if ($submission->contact_target === 'factory') {
+                            $target_label = 'Liên hệ cho nhà máy';
+                        } elseif ($submission->contact_target === 'showroom') {
+                            $target_label = 'Liên hệ cho showroom';
+                        }
                         if ($submission->status === 'unread') {
                             $actions[] = '<a href="' . admin_url('admin.php?page=contact-submissions&action=mark-read&id=' . $submission->id) . '" class="button button-small">Đánh dấu đã đọc</a>';
                         } else {
@@ -601,6 +630,7 @@ function display_contact_submissions_page()
                             <td><?php echo esc_html($full_name); ?></td>
                             <td><a href="mailto:<?php echo esc_attr($submission->email); ?>"><?php echo esc_html($submission->email); ?></a></td>
                             <td><?php echo esc_html($submission->phone); ?></td>
+                            <td><?php echo esc_html($target_label); ?></td>
                             <td class="message-col">
                                 <div class="message-preview"><?php echo esc_html($message_preview); ?></div>
                                 <div class="message-full" style="display: none;"><?php echo nl2br(esc_html($submission->message)); ?></div>
@@ -625,7 +655,7 @@ function display_contact_submissions_page()
                 } else {
                     ?>
                     <tr>
-                        <td colspan="8">Chưa có tin nhắn liên hệ nào.</td>
+                        <td colspan="9">Chưa có tin nhắn liên hệ nào.</td>
                     </tr>
                 <?php
                 }

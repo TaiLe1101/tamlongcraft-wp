@@ -16,6 +16,64 @@ get_header();
 </section>
 
 
+<!-- Sửa thành các sản phẩm -->
+<!-- Featured Products -->
+<section class="section">
+    <div class="container">
+        <h2 class="section__title"><?php the_field('title_2'); ?></h2>
+        <p class="section__subtitle"><?php the_field('sub_title_2'); ?></p>
+
+        <div class="products">
+            <?php
+            $args = array(
+                'post_type' => 'san-pham',
+                'posts_per_page' => 6,
+                'orderby' => 'date',
+                'order' => 'DESC'
+            );
+
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    $product_id = get_the_ID();
+                    $product_image = get_the_post_thumbnail_url($product_id, 'full');
+                    $product_title = get_the_title();
+                    $product_content = get_the_content();
+                    $price = get_field('price', $product_id);
+                    // Lấy taxonomy của sản phẩm
+                    $product_cats = get_the_terms($product_id, 'product-category');
+                    // Kiểm tra nếu có danh mục và lấy tên danh mục đầu tiên
+                    $category_name = !empty($product_cats) ? $product_cats[0]->name : '';
+                    // Lấy permalink của sản phẩm
+                    $product_link = get_permalink($product_id);
+            ?>
+                    <div class="product-card">
+                        <img src="<?= esc_url($product_image); ?>" alt="<?= esc_attr($product_title); ?>" class="product-card__image">
+                        <div class="product-card__content">
+                            <?php if (!empty($category_name)) : ?>
+                                <div class="product-card__category"><?= esc_html($category_name); ?></div>
+                            <?php endif; ?>
+                            <h3 class="product-card__title"><?= esc_html($product_title); ?></h3>
+                            <p class="product-card__description"><?= esc_html($product_content); ?></p>
+                            <a href="<?= esc_url($product_link); ?>" class="btn btn--dark">Chi tiết</a>
+                        </div>
+                    </div>
+            <?php
+                }
+                wp_reset_postdata();
+            }
+            ?>
+
+        </div>
+
+        <div class="section__action">
+            <a href="/san-pham" class="btn btn--primary">Xem tất cả sản phẩm</a>
+        </div>
+    </div>
+</section>
+
 
 <!-- Categories Section -->
 <?php
@@ -90,7 +148,7 @@ if (!empty($product_categories) && !is_wp_error($product_categories)) :
         .category-slide {
             display: block;
             text-decoration: none;
-            height: 400px;
+            aspect-ratio: 9 / 16;
             position: relative;
             overflow: hidden;
             border-radius: 20px;
@@ -106,7 +164,7 @@ if (!empty($product_categories) && !is_wp_error($product_categories)) :
         .category-slide__image {
             width: 100%;
             height: 100%;
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -226,69 +284,64 @@ if (!empty($product_categories) && !is_wp_error($product_categories)) :
         }
 
         /* Responsive */
-        30px 60px;
-        }
+        @media (max-width: 1200px) {
+            .categories-slider {
+                padding: 30px 60px;
+            }
 
-        .category-slide {
-            height: 350px;
-        }
-
-        .category-slide__title {
-            font-size: 1.5rem;
-        }
+            .category-slide__title {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 768px) {
             .categories-slider {
-                padding: 20px 30 @media (max-width: 768px) {
-                    .categories-slider {
-                        padding: 0 15px;
-                    }
+                padding: 20px 30px;
+            }
 
-                    .category-slide {
-                        height: 320px;
-                        border-radius: 15px;
-                    }
+            .category-slide {
+                border-radius: 15px;
+            }
 
-                    .category-slide__content {
-                        padding: 25px;
-                    }
+            .category-slide__content {
+                padding: 25px;
+            }
 
-                    .category-slide__title {
-                        font-size: 1.4rem;
-                    }
+            .category-slide__title {
+                font-size: 1.4rem;
+            }
 
-                    .category-slide__arrow {
-                        width: 45px;
-                        height: 45px;
-                    }
+            .category-slide__arrow {
+                width: 45px;
+                height: 45px;
+            }
 
-                    .swiper-button-next,
-                    .swiper-button-prev {
-                        width: 45px;
-                        height: 45px;
-                    }
+            .swiper-button-next,
+            .swiper-button-prev {
+                width: 45px;
+                height: 45px;
+            }
 
-                    .swiper-button-next:after,
-                    .swiper-button-prev:after {
-                        font-size: 1.1rem;
-                    }
-                }
+            .swiper-button-next:after,
+            .swiper-button-prev:after {
+                font-size: 1.1rem;
+            }
+        }
 
-                @media (max-width: 480px) {
-                    .category-slide {
-                        height: 280px;
-                    }
+        @media (max-width: 480px) {
+            .categories-slider {
+                padding: 0 15px;
+            }
 
-                    .category-slide__title {
-                        font-size: 1.25rem;
-                    }
+            .category-slide__title {
+                font-size: 1.25rem;
+            }
 
-                    .swiper-button-next,
-                    .swiper-button-prev {
-                        display: none;
-                    }
-                }
+            .swiper-button-next,
+            .swiper-button-prev {
+                display: none;
+            }
+        }
     </style>
 
     <script>
@@ -344,66 +397,6 @@ if (!empty($product_categories) && !is_wp_error($product_categories)) :
 <?php
 endif;
 ?>
-
-
-
-<!-- Sửa thành các sản phẩm -->
-<!-- Featured Products -->
-<section class="section">
-    <div class="container">
-        <h2 class="section__title"><?php the_field('title_2'); ?></h2>
-        <p class="section__subtitle"><?php the_field('sub_title_2'); ?></p>
-
-        <div class="products">
-            <?php
-            $args = array(
-                'post_type' => 'san-pham',
-                'posts_per_page' => 6,
-                'orderby' => 'date',
-                'order' => 'DESC'
-            );
-
-            $query = new WP_Query($args);
-
-            if ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    $query->the_post();
-                    $product_id = get_the_ID();
-                    $product_image = get_the_post_thumbnail_url($product_id, 'full');
-                    $product_title = get_the_title();
-                    $product_content = get_the_content();
-                    $price = get_field('price', $product_id);
-                    // Lấy taxonomy của sản phẩm
-                    $product_cats = get_the_terms($product_id, 'product-category');
-                    // Kiểm tra nếu có danh mục và lấy tên danh mục đầu tiên
-                    $category_name = !empty($product_cats) ? $product_cats[0]->name : '';
-                    // Lấy permalink của sản phẩm
-                    $product_link = get_permalink($product_id);
-            ?>
-                    <div class="product-card">
-                        <img src="<?= esc_url($product_image); ?>" alt="<?= esc_attr($product_title); ?>" class="product-card__image">
-                        <div class="product-card__content">
-                            <?php if (!empty($category_name)) : ?>
-                                <div class="product-card__category"><?= esc_html($category_name); ?></div>
-                            <?php endif; ?>
-                            <h3 class="product-card__title"><?= esc_html($product_title); ?></h3>
-                            <p class="product-card__description"><?= esc_html($product_content); ?></p>
-                            <a href="<?= esc_url($product_link); ?>" class="btn btn--dark">Chi tiết</a>
-                        </div>
-                    </div>
-            <?php
-                }
-                wp_reset_postdata();
-            }
-            ?>
-
-        </div>
-
-        <div class="section__action">
-            <a href="/san-pham" class="btn btn--primary">Xem tất cả sản phẩm</a>
-        </div>
-    </div>
-</section>
 
 <!-- Why Choose Us -->
 <section class="section">

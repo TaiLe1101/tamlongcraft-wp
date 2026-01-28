@@ -114,6 +114,15 @@ $qa = get_field('qa', $current_page_id);
                     </div>
 
                     <div class="form__group">
+                        <label for="contact-target" class="form__label">Liên hệ đến*</label>
+                        <select id="contact-target" name="contact_target" class="form__select" required>
+                            <option value="">Chọn nơi cần liên hệ</option>
+                            <option value="factory">Liên hệ cho nhà máy</option>
+                            <option value="showroom">Liên hệ cho showroom</option>
+                        </select>
+                    </div>
+
+                    <div class="form__group">
                         <label for="message" class="form__label">Tin Nhắn Của Bạn*</label>
                         <textarea id="message" name="message" class="form__textarea" rows="6" required></textarea>
                     </div>

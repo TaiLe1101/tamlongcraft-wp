@@ -119,12 +119,13 @@ $(document).ready(function() {
             const email = $form.find('#email').val();
             const phone = $form.find('#phone').val();
             const message = $form.find('#message').val();
+            const contactTarget = $form.find('#contact-target').val();
             const newsletter = $form.find('#newsletter').is(':checked') ? '1' : '0';
             const privacy = $form.find('#privacy').is(':checked') ? '1' : '0';
             const nonce = $form.find('input[name="contact_nonce"]').val();
             
             // Kiểm tra dữ liệu đầu vào
-            if (!firstName || !lastName || !email || !message || !privacy) {
+            if (!firstName || !lastName || !email || !message || !privacy || !contactTarget) {
                 showFormMessage($form, 'Vui lòng điền đầy đủ thông tin bắt buộc.', 'error');
                 return;
             }
@@ -151,6 +152,7 @@ $(document).ready(function() {
                     email: email,
                     phone: phone,
                     message: message,
+                    contact_target: contactTarget,
                     newsletter: newsletter,
                     privacy: privacy,
                     contact_nonce: nonce
