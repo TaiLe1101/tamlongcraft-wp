@@ -63,11 +63,15 @@ $qa = get_field('qa', $current_page_id);
 
         <div class="contact-info">
             <?php
-            foreach ($card_contact as $contact) {
-                $title = get_the_title($contact->ID);
-                $icon = get_field('icon', $contact->ID);
-                $info = get_field('info', $contact->ID);
-            ?>
+            if (is_array($card_contact) && !empty($card_contact)) {
+                foreach ($card_contact as $contact) {
+                    $title = get_the_title($contact->ID);
+                    $icon = get_field('icon', $contact->ID);
+                    $info = get_field('info', $contact->ID);
+                    
+                    // Chỉ hiển thị nếu có cả title và info
+                    if (!empty($title) && !empty($info) && strlen(trim($info)) > 0) {
+                ?>
                 <div class="contact-info__item">
                     <div class="contact-info__icon">
                         <i class="dashicons <?php echo esc_attr($icon); ?>"></i>
@@ -75,7 +79,12 @@ $qa = get_field('qa', $current_page_id);
                     <h3 class="contact-info__title"><?php echo esc_html($title); ?></h3>
                     <p class="contact-info__details"><?php echo esc_html($info); ?></p>
                 </div>
-            <?php } ?>
+            <?php 
+                    }
+                } 
+                wp_reset_postdata();
+            } 
+            ?>
 
         </div>
     </div>
@@ -195,9 +204,15 @@ $qa = get_field('qa', $current_page_id);
                                 <address>
                                     <?php echo esc_html($map_address); ?>
                                 </address>
-                                <p><strong>Điện thoại:</strong> <?php echo esc_html($phone_number); ?></p>
-                                <p><strong>Email:</strong> <?php echo esc_html($email); ?></p>
-                                <p><strong>Giờ mở cửa:</strong> <?php echo esc_html($open_time); ?></p>
+                                <?php if (!empty($phone_number) && strlen(trim($phone_number)) > 0) : ?>
+                                    <p><strong>Điện thoại:</strong> <?php echo esc_html($phone_number); ?></p>
+                                <?php endif; ?>
+                                <?php if (!empty($email) && strlen(trim($email)) > 0) : ?>
+                                    <p><strong>Email:</strong> <?php echo esc_html($email); ?></p>
+                                <?php endif; ?>
+                                <?php if (!empty($open_time) && strlen(trim($open_time)) > 0) : ?>
+                                    <p><strong>Giờ mở cửa:</strong> <?php echo esc_html($open_time); ?></p>
+                                <?php endif; ?>
                                 <a href="#" class="btn btn--dark">Chỉ Đường</a>
                                 <a href="#" class="btn btn--outline">Đặt Lịch Hẹn</a>
                             </div>
@@ -220,13 +235,14 @@ $qa = get_field('qa', $current_page_id);
 
         <div class="faqs">
             <?php
-            foreach ($qa as $question) {
-                $question_id = $question->ID;
-                $question_title = get_the_title($question_id);
+            if (is_array($qa)) {
+                foreach ($qa as $question) {
+                    $question_id = $question->ID;
+                    $question_title = get_the_title($question_id);
 
-                // Lấy content đúng cách
-                $post = get_post($question_id);
-                $question_content = $post->post_content;
+                    // Lấy content đúng cách
+                    $post = get_post($question_id);
+                    $question_content = $post->post_content;
 
             ?>
                 <div class="faq">
@@ -238,8 +254,11 @@ $qa = get_field('qa', $current_page_id);
                         <div><?php echo wpautop($question_content); ?></div>
                     </div>
                 </div>
-            <?php };
-            wp_reset_postdata(); ?>
+            <?php 
+                }
+                wp_reset_postdata();
+            }
+            ?>
         </div>
 
         <div class="faq-cta">
