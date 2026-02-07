@@ -398,40 +398,8 @@ if (!empty($product_categories) && !is_wp_error($product_categories)) :
 endif;
 ?>
 
+
 <!-- Why Choose Us -->
-<section class="section">
-    <div class="container">
-        <h2 class="section__title"><?php the_field('title_4'); ?></h2>
-        <p class="section__subtitle"><?php the_field('sub_title_4'); ?></p>
-
-        <div class="features">
-            <?php
-            $query = new WP_Query(array('post_type' => 'advantage'));
-            while ($query->have_posts()) {
-                $query->the_post();
-                $advantage_id = get_the_ID();
-                $advantage_title = $query->post->post_title;
-                $advantage_description = get_field('desc', $advantage_id);
-                $advantage_icon = get_field('icons', $advantage_id);
-            ?>
-                <div class="feature">
-                    <div class="feature__icon">
-                        <i class="dashicons <?= esc_attr($advantage_icon); ?>"></i>
-                    </div>
-                    <h3 class="feature__title"><?= esc_html($advantage_title); ?></h3>
-                    <p class="feature__description"><?= esc_html($advantage_description); ?></p>
-                </div>
-            <?php
-            }
-            wp_reset_postdata();
-            ?>
-        </div>
-
-
-    </div>
-</section>
-
-<!-- Latest Articles -->
 <?php
 $args = array(
     'post_type'      => 'post',
@@ -445,10 +413,10 @@ $query = new WP_Query($args);
 
 if ($query->have_posts()) :
 ?>
-    <section class="section section--alt">
+    <section class="section">
         <div class="container">
-            <h2 class="section__title"><?php the_field('title_5'); ?></h2>
-            <p class="section__subtitle"><?php the_field('sub_title_5'); ?></p>
+            <h2 class="section__title"><?php the_field('title_4'); ?></h2>
+            <p class="section__subtitle"><?php the_field('sub_title_4'); ?></p>
 
             <div class="articles">
                 <?php
@@ -478,6 +446,8 @@ if ($query->have_posts()) :
             <div class="section__action">
                 <a href="/bai-viet" class="btn btn--primary">Xem tất cả bài viết</a>
             </div>
+
+
         </div>
     </section>
 <?php

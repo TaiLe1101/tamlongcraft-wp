@@ -926,6 +926,10 @@ a:hover {
 .article-card__excerpt {
   color: var(--color-charcoal);
   margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Articles Filter and Pagination */
