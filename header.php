@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tam Long Craft Manifactory - In Export</title>
+    <title>Tam Long Craft Manufactory - In Export</title>
     <?php wp_head(); ?>
 </head>
 

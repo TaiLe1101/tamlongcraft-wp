@@ -4,7 +4,7 @@
                 <div class="footer__grid">
                         <div class="footer__info">
                                 <a href="<?php echo home_url(); ?>" class="footer__logo" style="line-height: 28px;">Tam Long Craft<p class="footer__logo-accent" style="line-height: 28px;">
-                                                Manifactory - In Export
+                                                Manufactory - In Export
                                         </p></a>
                                 <p class="footer__about"><?php the_field('about'); ?></p>
                                 <div class="footer__social">
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="footer__bottom">
-                        <p>&copy; 2025 Tam Long Craft Manifactory - In Export. Bản Quyền Thuộc Về Chúng Tôi. | <a href="/chinh-sach-bao-mat">Chính Sách Bảo Mật</a> | <a href="/dieu-khoan-dich-vu">Điều Khoản Dịch Vụ</a></p>
+                        <p>&copy; 2025 Tam Long Craft Manufactory - In Export. Bản Quyền Thuộc Về Chúng Tôi. | <a href="/chinh-sach-bao-mat">Chính Sách Bảo Mật</a> | <a href="/dieu-khoan-dich-vu">Điều Khoản Dịch Vụ</a></p>
                 </div>
         </div>
 </footer>

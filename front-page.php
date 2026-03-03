@@ -417,30 +417,13 @@ if ($query->have_posts()) :
         <div class="container">
             <h2 class="section__title"><?php the_field('title_4'); ?></h2>
             <p class="section__subtitle"><?php the_field('sub_title_4'); ?></p>
-
-            <div class="articles">
-                <?php
-                while ($query->have_posts()) {
-                    $query->the_post();
-                    $article_id = get_the_ID();
-                    $article_title = get_the_title($article_id);
-                    $short_desc = get_field('short_desc', $article_id);
-                    $article_image = get_field('thumbnail', $article_id);
-                    $created_at = get_the_date('d/m/Y', $article_id);
-                ?>
-                    <div class="article-card">
-                        <img src="<?= esc_url($article_image); ?>" alt="<?= esc_attr($article_title); ?>" class="article-card__image">
-                        <div class="article-card__content">
-                            <div class="article-card__date"><?= esc_html($created_at); ?></div>
-                            <h3 class="article-card__title"><?php echo $article_title ?></h3>
-                            <p class="article-card__excerpt"><?php echo esc_html($short_desc); ?></p>
-                            <a href="<?php echo get_permalink($article_id); ?>" class="btn btn--dark">Xem thêm</a>
-                        </div>
-                    </div>
-                <?php
-                }
-                wp_reset_postdata();
-                ?>
+            </br>
+            <div>
+                <p>Tam Long Craft chuyên sản xuất nội thất và đồ thủ công mỹ nghệ từ vật liệu tự nhiên như mây, tre, lục bình. Kết hợp tinh hoa truyền thống và thiết kế hiện đại, sản phẩm của chúng tôi không chỉ tinh tế, bền bỉ mà còn có tính ứng dụng cao, phù hợp cho mọi không gian từ gia đình đến khu nghỉ dưỡng.</p>
+                </br>
+                <p>Chúng tôi tự hào góp phần bảo tồn văn hóa làng nghề Việt Nam và tạo việc làm ổn định, nâng cao đời sống cho người dân địa phương. Với tiêu chí thân thiện với môi trường và an toàn cho người dùng, mỗi sản phẩm đều chứa đựng giá trị nhân văn sâu sắc.</p>
+                </br>
+                <p>Với phương châm “Chất lượng tạo niềm tin – Giá trị tạo sự bền vững”, Tam Long Craft cam kết mang đến những sản phẩm chất lượng, đồng hành cùng khách hàng và đối tác trong và ngoài nước trên hành trình phát triển bền vững.</p>
             </div>
 
             <div class="section__action">
