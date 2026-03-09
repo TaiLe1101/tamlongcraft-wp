@@ -16,7 +16,7 @@
                 <a href="/" style="display: block; width: 52px; height: 52px; overflow: hidden">
                     <img src="https://tamlongcraft.com/wp-content/uploads/2026/01/cropped-a-scaled-1.jpg" alt="" style="width: 100%; height: 100%; object-fit: contain;">
                 </a>
-                <a href="/" class="header__logo" style="line-height: 28px;">Tam LongCraft<p class="header__logo-accent" style="line-height: 28px;"> Manifactory - In Export</p></a>
+                <a href="/" class="header__logo" style="line-height: 28px;">Tam LongCraft<p class="header__logo-accent" style="line-height: 28px;"> Manufactory - In Export</p></a>
             </div>
             <?php
             wp_nav_menu([
